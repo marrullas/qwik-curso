@@ -7,45 +7,39 @@ import { usePokemonGame } from '~/hooks/use-pokemon-game';
 
 export default component$(() => {
 
-  const nav = useNavigate(); 
-
+  const nav = useNavigate();
   const {
     isPokemonVisible,
     showBackImage,
     pokemonId,
     nextPokemon,
     prevPokemon,
-    toggleFrontBack,
-    toggleVisible
+    toggleVisible,
+    toggleFromBack,
   } = usePokemonGame();
 
 
-  const gotoPokemon = $(( id: number ) => {
-    
-    nav(`/pokemon/${id}/`);
+  const goToPokemon = $(( id: number ) => {
+    nav(`/pokemon/${ id }/`);
   });
+
 
   return (
     <>
 
         <span class="text-2xl">Buscador simple</span>
 
-        <span class="text-9xl">{ pokemonId.value }</span>
-        {/* <Link href={`/pokemon/${pokemonId.value}/`} >
+        <span class="text-9xl">{ pokemonId }</span>
+
+        {/* <Link href={`/pokemon/${ pokemonId.value }/`}> */}
+        <div onClick$={ () => goToPokemon( pokemonId.value ) }>
           <PokemonImage 
             id={ pokemonId.value } 
             backImage={ showBackImage.value }
             isVisible={ isPokemonVisible.value }
           />
-        </Link> */}
-        <div onClick$={ () => gotoPokemon(pokemonId.value)}>
-          <PokemonImage 
-              id={ pokemonId.value } 
-              backImage={ showBackImage.value }
-              isVisible={ isPokemonVisible.value }
-          />
-
         </div>
+        
 
 
         <div class="mt-2">
@@ -55,7 +49,7 @@ export default component$(() => {
           <button onClick$={ nextPokemon } class="btn btn-primary mr-2">Siguiente</button>
 
 
-          <button onClick$={ toggleFrontBack }  class="btn btn-primary mr-2">
+          <button onClick$={ toggleFromBack }  class="btn btn-primary mr-2">
             Voltear
           </button>
 

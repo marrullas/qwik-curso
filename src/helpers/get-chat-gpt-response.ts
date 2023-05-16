@@ -1,3 +1,4 @@
+
 import { Configuration, OpenAIApi } from 'openai';
 
 const configuration = new Configuration({
@@ -8,7 +9,7 @@ const openai = new OpenAIApi(configuration);
 
 export const getFunFactAboutPokemon = async( pokemonName: string ):Promise<string> => {
 
-    delete configuration.baseOptions.headers['User-Agent']; //para que no de error de cors
+    delete configuration.baseOptions.headers['User-Agent'];
 
     const response = await openai.createCompletion({
       model: "text-davinci-003",
@@ -23,3 +24,5 @@ export const getFunFactAboutPokemon = async( pokemonName: string ):Promise<strin
     
     return response.data.choices[0].text || `No tengo nada sobre ${ pokemonName }, lo siento`;
 }
+
+

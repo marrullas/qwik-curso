@@ -9,7 +9,7 @@ interface Props {
 
 
 export const PokemonImage = component$(({ 
-    id = 1, 
+    id, 
     size = 200, 
     backImage = false,
     isVisible = true,
@@ -17,26 +17,21 @@ export const PokemonImage = component$(({
 
     const imageLoaded = useSignal(false);
     
-    useTask$(({ track })=> { //track es una función que se ejecuta cuando se actualiza el componente
+    useTask$(({ track })=> {
         track( () => id );
 
         imageLoaded.value = false;
     });
 
+    
     const imageUrl = useComputed$(() => {
 
-        return (backImage)
+        if ( id === '' ) return '';
+
+        return ( backImage )
             ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${ id }.png`
             : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ id }.png`;
-
-    });
-
-    // let imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ id }.png`;
-
-    // if ( backImage ) {
-    //     imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${ id }.png`;
-    // }
-
+    })
 
 
     return (

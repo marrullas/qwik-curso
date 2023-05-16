@@ -2,12 +2,14 @@ import { Slot, component$ } from '@builder.io/qwik';
 import { Link } from '@builder.io/qwik-city';
 
 export default component$(() => {
-  return (
+  
+    return (
+        <div class="flex flex-col justify-center items-center mt-10">
+            <Slot />
 
-      <div class="flex flex-col justify-center items-center mt-10">
-        <Slot />
-
-        <Link href="/" class="mt-10 text-blue-500 hover:text-blue-800">Regresar</Link>
-      </div>
-  )
+            <Link href='/' class="mt-10">
+                Regresar
+            </Link>
+        </div>
+    )
 });
