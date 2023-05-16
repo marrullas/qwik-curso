@@ -1,6 +1,7 @@
 
 
+
 export interface SmallPokemon {
-    id: number | string;
+    id  : string;
     name: string;
 }
