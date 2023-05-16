@@ -1,15 +1,15 @@
-import { component$, useSignal, useTask$ } from '@builder.io/qwik';
+import { component$, useComputed$, useSignal, useTask$ } from '@builder.io/qwik';
 
 interface Props {
-    id   : number;
+    id   : number | string;
     size?: number;
-    backImage: boolean;
+    backImage?: boolean;
     isVisible?: boolean;
 }
 
 
 export const PokemonImage = component$(({ 
-    id, 
+    id = 1, 
     size = 200, 
     backImage = false,
     isVisible = true,
@@ -17,18 +17,25 @@ export const PokemonImage = component$(({
 
     const imageLoaded = useSignal(false);
     
-    useTask$(({ track })=> {
+    useTask$(({ track })=> { //track es una función que se ejecuta cuando se actualiza el componente
         track( () => id );
 
         imageLoaded.value = false;
     });
 
+    const imageUrl = useComputed$(() => {
 
-    let imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ id }.png`;
+        return (backImage)
+            ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${ id }.png`
+            : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ id }.png`;
 
-    if ( backImage ) {
-        imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${ id }.png`;
-    }
+    });
+
+    // let imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ id }.png`;
+
+    // if ( backImage ) {
+    //     imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${ id }.png`;
+    // }
 
 
 
@@ -38,7 +45,7 @@ export const PokemonImage = component$(({
             { !imageLoaded.value && <span>Cargando... </span> }
             
             <img 
-                src={ imageUrl } 
+                src={ imageUrl.value } 
                 alt="Pokemon Sprite" 
                 style={{ width: `${ size }px` }}
                 onLoad$={ () => {
@@ -48,7 +55,7 @@ export const PokemonImage = component$(({
                 }}
                 class={[{
                     'hidden': !imageLoaded.value,
-                    'brightness-0': isVisible
+                    'brightness-0': !isVisible
                 }, 'transition-all']} 
             />
         </div>

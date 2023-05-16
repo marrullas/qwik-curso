@@ -5,7 +5,7 @@ import styles from './styles.css?inline';
 
 
 export default component$(() => {
-  useStyles$(styles);
+  useStyles$(styles); //despues de este hook se aplican los estilos de manera global
   return (
     <>
       <Navbar />
